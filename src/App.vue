@@ -1,13 +1,7 @@
 <template>
   <div class="main-wrap">
   <headNav></headNav>
-    <div class="container">
-      <div class="row">
-        <div class="col-4">
-          <h1>{{ msg }}</h1>
-        </div>
-      </div>
-    </div>
+    <router-view></router-view>
   <footNav></footNav>
   </div>
 </template>
@@ -17,9 +11,9 @@
   import footNav from './components/footer'
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
     }
   },
   components: {
