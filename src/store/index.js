@@ -5,11 +5,15 @@ import {router} from '../main'
 Vue.use(Vuex);
 const store = new Vuex.Store ({
     state: {
-        authState: true
+        authState: false,
+        resData: []
     },
     mutations: {
-        checkToken() {
-            return true;
+        checkToken(state, bool) {
+            state.authState = bool;
+        },
+        pushData(state, data) {
+            state.resData.push(data);
         }
     },
     actions: {
@@ -23,12 +27,17 @@ const store = new Vuex.Store ({
                         const headers = {headers: {'Content-Type':'application/json','Authorization':`Bearer ${res.data.token}`}};
                         axios.get('http://localhost:3012', headers)
                             .then((res) => {
-                                console.log(res);
-                                router.push('home');
+                                commit('checkToken', true);
+                                for(let key in res.data) {
+                                    commit('pushData', res.data[key].username);
+                                }
+                                router.push('/');
+                                commit('checkToken', false);
                             })
                             .catch((err) => {
                                 console.log(err);
-                                router.push('home');
+                                commit('checkToken', false);
+                                router.push('/');
                             });
                     })
                     .catch((err) => {
