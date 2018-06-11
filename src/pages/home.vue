@@ -2,10 +2,21 @@
     <div class="container register">
         <div class="row">
            <div class="col-12">
-               <h1>Привет</h1>
-               <ul>
-                   <li v-for="data in getData()">{{ data }}</li>
-               </ul>
+               <h3>Hello</h3>
+               <table class="table">
+                   <thead class="thead-dark">
+                       <tr>
+                           <th scope="col">Number</th>
+                           <th scope="col">Name</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                   <tr v-for="(data, index) in getUserData">
+                       <td>{{ index }}</td>
+                       <td>{{ data }}</td>
+                   </tr>
+                   </tbody>
+               </table>
            </div>
         </div>
     </div>
@@ -18,10 +29,13 @@
                msg: []
             }
         },
-        methods: {
-            getData () {
-                return store.state.resData;
+        computed: {
+            getUserData () {
+                return store.getters.userData;
             }
+        },
+        methods: {
+
         }
     }
 </script>

@@ -11,18 +11,28 @@
           <router-link tag="a" class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Users</a>
+          <a class="nav-link" href="#">Data</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Messages (1)</a>
+          <router-link tag="a" class="nav-link" to="/savedata">Create Category <span class="sr-only">(current)</span></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link tag="a" class="nav-link" to="/goodsave">Create Good <span class="sr-only">(current)</span></router-link>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Favorites</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Categories</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Auth
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <router-link tag="a" class="dropdown-item" to="/login">Login</router-link>
-            <router-link tag="a" class="dropdown-item" to="/register">Register</router-link>
+            <router-link tag="a" class="dropdown-item" to="/login" v-if="check === false">Login</router-link>
+            <router-link tag="a" class="dropdown-item" to="/register" v-if="check === false">Register</router-link>
+            <router-link tag="a" class="dropdown-item" to="/logout" v-if="check">Logout</router-link>
           </div>
         </li>
       </ul>
@@ -34,8 +44,14 @@
   </nav>
 </template>
 <script>
+    import store from '../store/index'
   export default {
-    name: 'headNav'
+    name: 'headNav',
+    computed: {
+        check () {
+            return store.state.authState;
+        }
+    }
   }
 </script>
 <style lang="scss">

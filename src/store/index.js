@@ -1,50 +1,134 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import VueCookie from 'vue-cookie'
 import {router} from '../main'
+Vue.use(VueCookie);
 Vue.use(Vuex);
 const store = new Vuex.Store ({
     state: {
         authState: false,
-        resData: []
+        resData: [],
+        category: []
     },
     mutations: {
-        checkToken(state, bool) {
+        checkLoginAuthState (state, bool) {
             state.authState = bool;
+        },
+        checkToken(state) {
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Vue.cookie.get('token')}`
+                }
+            };
+            axios.get('http://localhost:3012', headers)
+                .then((res) => {
+                    //console.log(res);
+                    state.authState = true;
+                })
+                .catch((res) => {
+                    console.log(res);
+                    state.authState = false;
+                });
         },
         pushData(state, data) {
             state.resData.push(data);
+        },
+        deleteData (state) {
+            return state.resData = [];
+        },
+        deleteCategoryData (state) {
+            return state.category = [];
+        },
+        setCategoryData (state, data) {
+            state.category.push(data);
         }
     },
     actions: {
+        checkAuth({commit}) {
+            commit('checkToken');
+        },
         auth({commit}, {username, email, password, forgotPassword}) {
             const objFormData = {username, email, password, forgotPassword};
-            const headers = {headers : { 'Content-Type':'application/json' }};
+            const headers = {headers: {'Content-Type': 'application/json'}};
+            //проверка если есть поле почты то значит регистрируемся если нет то логинимся
+            let route = objFormData.email === undefined ? '/login' : '/register';
+            axios.post('http://localhost:3012' + route, objFormData, headers)
+                .then((res) => {
+                    Vue.cookie.set('token', res.data.token, 7);
+                    commit('checkLoginAuthState', true);
+                    router.push('/');
+                    commit('checkLoginAuthState', false);
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        },
+        logout () {
+            Vue.cookie.delete('token');
+            window.location.reload();
+        },
+        resUserData ({commit}) {
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Vue.cookie.get('token')}`
+                }
+            };
+            axios.get('http://localhost:3012', headers)
+                .then((res) => {
+                    commit('checkToken');
+                    commit('deleteData');
+                    for (let key in res.data) {
+                        commit('pushData', res.data[key].username);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+        setData({commit}, {category}) {
+            const objFormData = {category};
+            const headers = {headers: {'Content-Type': 'application/json'}};
+            axios.post('http://localhost:3012/info', objFormData, headers)
+                .then((res) => {
+                    alert('Category created successful');
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        },
+        setCategory ({commit}) {
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Vue.cookie.get('token')}`
+                }
+            };
+            axios.get('http://localhost:3012/goods', headers)
+                .then((res) => {
+                    commit('checkToken');
+                    commit('deleteCategoryData');
+                    for (let key in res.data) {
+                        commit('setCategoryData', res.data[key]);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
 
-            if (password === forgotPassword) {
-                 axios.post('http://localhost:3012/register', objFormData, headers )
-                    .then((res) => {
-                        const headers = {headers: {'Content-Type':'application/json','Authorization':`Bearer ${res.data.token}`}};
-                        axios.get('http://localhost:3012', headers)
-                            .then((res) => {
-                                commit('checkToken', true);
-                                for(let key in res.data) {
-                                    commit('pushData', res.data[key].username);
-                                }
-                                router.push('/');
-                                commit('checkToken', false);
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                                commit('checkToken', false);
-                                router.push('/');
-                            });
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
-            } else alert('Ваши пароли не совпадают, повторите ввод снова');
+    },
+    getters: {
+        userData(state) {
+            return state.resData;
+        },
+        categoryData (state) {
+            return state.category;
         }
     }
 });
+
 export default  store;
