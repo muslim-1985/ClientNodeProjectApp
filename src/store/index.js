@@ -9,7 +9,8 @@ const store = new Vuex.Store ({
     state: {
         authState: false,
         resData: [],
-        category: []
+        category: [],
+        good: []
     },
     mutations: {
         checkLoginAuthState (state, bool) {
@@ -43,6 +44,12 @@ const store = new Vuex.Store ({
         },
         setCategoryData (state, data) {
             state.category.push(data);
+        },
+        setGoodData (state, data) {
+            state.good.push(data);
+        },
+        deleteGoodData (state) {
+            return state.good = [];
         }
     },
     actions: {
@@ -118,15 +125,50 @@ const store = new Vuex.Store ({
                 .catch((err) => {
                     console.log(err);
                 });
+        },
+        saveGood ({commit}, {category, name, price, image}) {
+            const objFormData = {category, name, price, image};
+            const headers = {headers: {'Content-Type': 'application/json'}};
+            axios.post('http://localhost:3012/setGood', objFormData, headers)
+                .then((res) => {
+                    alert('Good created successful');
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        },
+        setGood ({commit}) {
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Vue.cookie.get('token')}`
+                }
+            };
+            axios.get('http://localhost:3012/getGood', headers)
+                .then((res) => {
+                    commit('checkToken');
+                    commit('deleteGoodData');
+                    for (let key in res.data) {
+                        commit('setGoodData', res.data[key]);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
 
     },
+
     getters: {
         userData(state) {
             return state.resData;
         },
         categoryData (state) {
             return state.category;
+        },
+        goodData (state) {
+            return state.good;
         }
     }
 });

@@ -5,9 +5,9 @@
                 <h3>Load Good</h3>
                 <form>
                     <div class="form-group">
-                        <label for="sel1">Select Category:</label>
-                        <select class="form-control" id="sel1" name="sellist1">
-                            <option v-for="(data, index) in getCategoryData" v-bind:value="data._id">{{ data.category }}</option>
+                        <label for="category">Select Category:</label>
+                        <select class="form-control" id="category" name="category" v-model="model.category">
+                            <option v-for="data in getCategoryData" v-bind:value="data._id">{{ data.category }}</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -22,7 +22,7 @@
                         <label for="image">Image</label>
                         <input type="file" class="form-control" id="image" @change="model.image">
                     </div>
-                    <button type="submit" class="btn btn-primary" @click="setData()">Submit</button>
+                    <button type="submit" class="btn btn-primary" @click="saveGood()">Submit</button>
                 </form>
             </div>
         </div>
@@ -45,6 +45,11 @@
         computed: {
             getCategoryData () {
                 return store.getters.categoryData;
+            }
+        },
+        methods: {
+            saveGood() {
+                store.dispatch('saveGood', this.model);
             }
         }
     }

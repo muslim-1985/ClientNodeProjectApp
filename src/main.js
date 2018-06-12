@@ -5,6 +5,7 @@ import Register from './pages/register'
 import SaveData from './pages/saveData'
 import Home from './pages/home'
 import GoodSave from './pages/goodSave'
+import GoodShow from './pages/goodShow'
 import store  from './store/index'
 import {sync}  from 'vuex-router-sync'
 import VueRouter from 'vue-router'
@@ -22,6 +23,10 @@ function logout (to, from, next) {
     store.dispatch('logout');
     store.state.authState = false;
     next()
+}
+function getGoodData (to, from ,next) {
+    store.dispatch('setGood');
+    next();
 }
 export const router = new VueRouter ({
   routes: [
@@ -47,6 +52,12 @@ export const router = new VueRouter ({
           name: 'goodsave',
           component: GoodSave,
           beforeEnter: getCategoryData
+      },
+      {
+          path: '/goodShow',
+          name: 'goodShow',
+          component: GoodShow,
+          beforeEnter: getGoodData
       },
     {
       path: '/login',
@@ -83,4 +94,4 @@ new Vue({
   router,
   store
 });
-// sync(Store, router);
+
