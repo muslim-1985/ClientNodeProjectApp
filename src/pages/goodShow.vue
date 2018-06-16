@@ -34,13 +34,18 @@
                 msg: []
             }
         },
+        created() {
+            this.setGoodData();
+        },
         computed: {
             getGoodData () {
                 return store.getters.goodData;
             }
         },
         methods: {
-
+             setGoodData () {
+                store.dispatch('setGood');
+            }
         }
     }
 </script>

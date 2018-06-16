@@ -20,10 +20,10 @@
                     </div>
                     <div class="form-group">
                         <label for="image">Image</label>
-                        <input type="file" class="form-control" id="image" @change="model.image">
+                        <input type="file" class="form-control" id="image" @change="onFile">
                     </div>
-                    <button type="submit" class="btn btn-primary" @click="saveGood()">Submit</button>
                 </form>
+                <button class="btn btn-primary" @click="saveGood()">Submit</button>
             </div>
         </div>
     </div>
@@ -42,14 +42,24 @@
                 }
             }
         },
+        created() {
+            this.setCategory();
+        },
         computed: {
-            getCategoryData () {
+            getCategoryData() {
                 return store.getters.categoryData;
             }
         },
         methods: {
             saveGood() {
                 store.dispatch('saveGood', this.model);
+            },
+            onFile(event) {
+                this.model.image = event.target.files[0];
+                console.log(this.model.image);
+            },
+            setCategory () {
+                store.dispatch('setCategory');
             }
         }
     }

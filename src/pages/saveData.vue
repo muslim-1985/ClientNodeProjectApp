@@ -20,8 +20,8 @@
                         <!--<label for="image">Image</label>-->
                         <!--<input type="file" class="form-control" id="image" @change="model.image">-->
                     <!--</div>-->
-                    <button type="submit" class="btn btn-primary" @click="setData()">Submit</button>
                 </form>
+                <button class="btn btn-primary" @click="setData()">Submit</button>
             </div>
         </div>
     </div>

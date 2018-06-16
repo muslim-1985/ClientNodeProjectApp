@@ -11,23 +11,7 @@ import {sync}  from 'vuex-router-sync'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
-function RRR (to, from, next) {
-    store.dispatch('resUserData');
-    next()
-}
-function getCategoryData(to, from, next) {
-    store.dispatch('setCategory');
-    next()
-}
-function logout (to, from, next) {
-    store.dispatch('logout');
-    store.state.authState = false;
-    next()
-}
-function getGoodData (to, from ,next) {
-    store.dispatch('setGood');
-    next();
-}
+
 export const router = new VueRouter ({
   routes: [
       {
@@ -39,8 +23,7 @@ export const router = new VueRouter ({
       {
         path: '/',
         name: 'home',
-        component: Home,
-          beforeEnter: RRR
+        component: Home
       },
       {
           path: '/savedata',
@@ -51,13 +34,11 @@ export const router = new VueRouter ({
           path: '/goodsave',
           name: 'goodsave',
           component: GoodSave,
-          beforeEnter: getCategoryData
       },
       {
           path: '/goodShow',
           name: 'goodShow',
-          component: GoodShow,
-          beforeEnter: getGoodData
+          component: GoodShow
       },
     {
       path: '/login',
@@ -69,7 +50,12 @@ export const router = new VueRouter ({
     }
   ]
 });
-
+//logout
+function logout (to, from, next) {
+    store.dispatch('logout');
+    store.state.authState = false;
+    next()
+}
 //router guard
 router.beforeEach((to, from, next) => {
     if(to.path != '/login' && to.path != '/register') {

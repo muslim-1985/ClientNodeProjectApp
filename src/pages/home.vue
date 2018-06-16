@@ -29,13 +29,18 @@
                msg: []
             }
         },
+        created() {
+            this.setUserData();
+        },
         computed: {
             getUserData () {
                 return store.getters.userData;
             }
         },
         methods: {
-
+             setUserData () {
+                store.dispatch('resUserData');
+            }
         }
     }
 </script>

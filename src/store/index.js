@@ -128,6 +128,11 @@ const store = new Vuex.Store ({
         },
         saveGood ({commit}, {category, name, price, image}) {
             const objFormData = {category, name, price, image};
+            //console.log(objFormData.image.name);
+            // let obj = new FormData();
+            // obj.append('img', objFormData.image, objFormData.image.name);
+            // objFormData.image = obj;
+
             const headers = {headers: {'Content-Type': 'application/json'}};
             axios.post('http://localhost:3012/setGood', objFormData, headers)
                 .then((res) => {
