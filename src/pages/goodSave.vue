@@ -3,6 +3,9 @@
         <div class="row">
             <div class="col-4 offset-4">
                 <h3>Load Good</h3>
+                    <div v-if="errors.length" class="alert alert-danger">
+                        <strong>Danger!</strong> <p v-for="error in errors">{{ error }}</p>
+                    </div>
                 <form>
                     <div class="form-group">
                         <label for="category">Select Category:</label>
@@ -16,7 +19,7 @@
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="text" class="form-control" id="price" placeholder="Price" v-model="model.price">
+                        <input type="number" class="form-control" id="price" placeholder="Price" v-model="model.price">
                     </div>
                     <div class="form-group">
                         <label for="image">Image</label>
@@ -34,10 +37,11 @@
     export default {
         data() {
             return {
+                errors: [],
                 model: {
                     category: '',
                     name: '',
-                    price: '',
+                    price: null,
                     image: ''
                 }
             }
@@ -52,11 +56,23 @@
         },
         methods: {
             saveGood() {
-                store.dispatch('saveGood', this.model);
+                if(this.model.category && this.model.name && this.model.price && typeof (+this.model.price) === 'number' && this.model.image) {
+                    return store.dispatch('saveGood', this.model).then(() => {
+                        this.model.category = '';
+                        this.model.name = '';
+                        this.model.price = null;
+                        this.model.image = '';
+                    });
+                }
+                this.errors = [];
+                if(!this.model.category) this.errors.push("Требуется указать категорию.");
+                if(!this.model.name) this.errors.push("Требуется указать название товара.");
+                if(!this.model.price) this.errors.push("Требуется указать стоимость товара.");
+                if(typeof (+this.model.price) !== 'number') this.errors.push("Стоимость товара должна быть числом.");
+                if(!this.model.image) this.errors.push("Загрузите изображение товара.");
             },
             onFile(event) {
                 this.model.image = event.target.files[0];
-                console.log(this.model.image);
             },
             setCategory () {
                 store.dispatch('setCategory');

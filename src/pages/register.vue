@@ -2,6 +2,9 @@
   <div class="container register">
     <div class="row">
       <div class="col-4 offset-4">
+        <div v-if="errors.length" class="alert alert-danger">
+          <strong>Danger!</strong> <p v-for="error in errors">{{ error }}</p>
+        </div>
         <form>
           <div class="form-group">
             <label for="username">Name</label>
@@ -35,6 +38,7 @@
   export default {
       data() {
           return {
+              errors: [],
               model: {
                   username: '',
                   email: '',
@@ -45,7 +49,15 @@
       },
       methods: {
           Auth() {
-              store.dispatch('auth', this.model);
+              if(this.model.username && this.model.email && this.model.password && this.model.forgotPassword && this.model.password === this.model.forgotPassword) {
+                  return store.dispatch('auth', this.model);
+              }
+              this.errors = [];
+              if(!this.model.username) this.errors.push("Требуется указать ваше имя.");
+              if(!this.model.email) this.errors.push("Требуется указать email.");
+              if(!this.model.password) this.errors.push("Требуется указать пароль.");
+              if(!this.model.forgotPassword) this.errors.push("Повторите пароль.");
+              if(this.model.password !== this.model.forgotPassword) this.errors.push("Введенный пароль несоотвествует указанному.");
           }
       }
   }

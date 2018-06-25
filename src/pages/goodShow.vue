@@ -17,7 +17,18 @@
                     <tbody>
                     <tr v-for="(data, index) in getGoodData">
                         <td>{{ index }}</td>
-                        <td>{{ data }}</td>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.price }}</td>
+                        <td>{{ data.category.category }}</td>
+                        <td><img :src="'http://localhost:3012/'+data.image.path"/></td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" @click="deleteGoodData({id: data._id, path: data.image.path})">delete</button>
+                            <button class="btn btn-sm" @click="setGoodInArray({name: data.name,
+                                                                                   price: data.price,
+                                                                                   category: data.category.category,
+                                                                                   image: 'http://localhost:3012/'+data.image.path
+                                                                                   })">add favorites</button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -31,7 +42,7 @@
     export default {
         data() {
             return {
-                msg: []
+               // goodsArray: []
             }
         },
         created() {
@@ -43,13 +54,25 @@
             }
         },
         methods: {
+            //получаем данные из БД и записываем в state
              setGoodData () {
                 store.dispatch('setGood');
+            },
+            deleteGoodData ({id, path}) {
+                 store.dispatch('deleteGood', {id, path})
+            },
+            setGoodInArray ({name, price, category, image}) {
+                 alert('Товар добавлен в "избранное"');
+                 //записываем данные в массив state
+                 store.commit('setGoodDataFromLocalStorage', {name, price, category, image})
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    img {
+        width: 100px;
+        height: auto;
+    }
 </style>

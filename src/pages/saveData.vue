@@ -3,23 +3,14 @@
         <div class="row">
             <div class="col-4 offset-4">
                 <h3>Load Category</h3>
+                <div v-if="errors.length" class="alert alert-danger">
+                    <strong>Danger!</strong> <p v-for="error in errors">{{ error }}</p>
+                </div>
                 <form>
                     <div class="form-group">
                         <label for="category">Category</label>
                         <input type="text" class="form-control" id="category" aria-describedby="category" placeholder="Enter category" v-model="model.category">
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label for="name">Good name</label>-->
-                        <!--<input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Enter good name" v-model="model.name">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="price">Price</label>-->
-                        <!--<input type="text" class="form-control" id="price" placeholder="Price" v-model="model.price">-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="image">Image</label>-->
-                        <!--<input type="file" class="form-control" id="image" @change="model.image">-->
-                    <!--</div>-->
                 </form>
                 <button class="btn btn-primary" @click="setData()">Submit</button>
             </div>
@@ -32,6 +23,7 @@
     export default {
         data() {
             return {
+                errors: [],
                 model: {
                     category: ''
                 }
@@ -39,7 +31,13 @@
         },
         methods: {
             setData() {
-                store.dispatch('setData', this.model);
+                if(this.model.category) {
+                    return store.dispatch('setData', this.model).then(() => {
+                        this.model.category = '';
+                    });
+                }
+                this.errors = [];
+                if(!this.model.category) this.errors.push("Требуется указать категорию.");
             }
         }
     }

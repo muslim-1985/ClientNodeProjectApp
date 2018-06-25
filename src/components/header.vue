@@ -20,7 +20,7 @@
           <router-link tag="a" class="nav-link" to="/goodShow">Goods<span class="sr-only">(current)</span></router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Favorites</a>
+          <router-link tag="a" class="nav-link" to="/favorites">Favorites<span class="sr-only">(current)</span></router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
