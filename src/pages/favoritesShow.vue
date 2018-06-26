@@ -41,15 +41,21 @@
             }
         },
         created() {
-            this.getGoodData;
+            this.setLocalStorage();
+            this.getLocal();
         },
         computed: {
             getGoodData () {
-                return  store.getters.getGoodToFavorites;
+                return store.getters.getGoodToFavorites;
             },
         },
         methods: {
-
+            setLocalStorage () {
+                store.dispatch('setGoodToFavorites');
+            },
+            getLocal () {
+                store.commit('setGoodDataLocalSt');
+            }
         }
     }
 </script>

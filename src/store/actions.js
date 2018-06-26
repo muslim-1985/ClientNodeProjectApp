@@ -1,5 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
+import {router} from '../main'
 
 export default {
     checkAuth({commit}) {
@@ -127,21 +128,24 @@ export default {
         })
 },
     setGoodToFavorites ({commit, state}) {
-    if(state.goodDataLocalStorage.length !== 0) {
-        //если локальное хранилище не пустое
-        if (Vue.localStorage.get('goodData') !== null) {
-            //получаем переменную состояния
-            let dataState = state.goodDataLocalStorage;
-            //получаем текущие данные в локальном хранилище
-            let dataLocalStorage = JSON.parse(Vue.localStorage.get('goodData'));
-            //объединяем два массива и сохраняем в локальном хранилище
-            let concatArrays = JSON.stringify(dataState.concat(dataLocalStorage));
-            //записываем массив с данными в хранилище
-            Vue.localStorage.set('goodData', concatArrays, 7);
-        } else {
-            const setData = JSON.stringify(state.goodDataLocalStorage);
-            Vue.localStorage.set('goodData', setData, 7);
+        if(state.goodDataLocalStorage.length !== 0) {
+            //если локальное хранилище не пустое
+            if (Vue.localStorage.get('goodData') !== null) {
+                //получаем переменную состояния
+                let dataState = state.goodDataLocalStorage;
+                //получаем текущие данные в локальном хранилище
+                let dataLocalStorage = JSON.parse(Vue.localStorage.get('goodData'));
+                //объединяем два массива и сохраняем в локальном хранилище
+                let concatArrays = JSON.stringify(dataState.concat(dataLocalStorage));
+                //очищаем массив
+                 state.goodDataLocalStorage = [];
+                //записываем массив с данными в хранилище
+                 Vue.localStorage.set('goodData', concatArrays, 7);
+            } else {
+                const setData = JSON.stringify(state.goodDataLocalStorage);
+                Vue.localStorage.set('goodData', setData, 7);
+                 state.goodDataLocalStorage = [];
+            }
         }
     }
-}
 }

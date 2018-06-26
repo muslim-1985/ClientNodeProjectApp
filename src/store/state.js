@@ -3,5 +3,6 @@ export default {
     resData: [],
     category: [],
     good: [],
-    goodDataLocalStorage: []
+    goodDataLocalStorage: [],
+    localStorage: ''
 }

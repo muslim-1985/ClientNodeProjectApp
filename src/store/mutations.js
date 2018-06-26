@@ -40,10 +40,10 @@ export default {
     deleteGoodData(state) {
         return state.good = [];
     },
-    getGoodDataFromDelete(state) {
-        return state.good;
-    },
     setGoodDataFromLocalStorage(state, data) {
         state.goodDataLocalStorage.push(data);
+    },
+    setGoodDataLocalSt (state) {
+        state.localStorage = JSON.parse(Vue.localStorage.get('goodData'));
     }
 }

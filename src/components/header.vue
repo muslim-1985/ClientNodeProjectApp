@@ -10,11 +10,15 @@
         <li class="nav-item active">
           <router-link tag="a" class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
         </li>
-        <li class="nav-item">
-          <router-link tag="a" class="nav-link" to="/savedata">Create Category <span class="sr-only">(current)</span></router-link>
-        </li>
-        <li class="nav-item">
-          <router-link tag="a" class="nav-link" to="/goodsave">Create Good <span class="sr-only">(current)</span></router-link>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categories
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdow">
+            <a href="#" class="dropdown-item">Cat1</a>
+            <a href="#" class="dropdown-item">Cat2</a>
+            <a href="#" class="dropdown-item">Cat3</a>
+          </div>
         </li>
         <li class="nav-item">
           <router-link tag="a" class="nav-link" to="/goodShow">Goods<span class="sr-only">(current)</span></router-link>

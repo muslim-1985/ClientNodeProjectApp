@@ -10,7 +10,8 @@ export default {
         goodData (state) {
         return state.good;
     },
-        getGoodToFavorites () {
-        return JSON.parse(Vue.localStorage.get('goodData'));
+        getGoodToFavorites (state) {
+            console.log(state.localStorage)
+        return state.localStorage;
     }
 }

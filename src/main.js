@@ -44,8 +44,7 @@ export const router = new VueRouter ({
       {
           path: '/favorites',
           name: 'favorites',
-          component: FavoritesShow,
-          beforeEnter: beforeSetLocalStorage
+          component: FavoritesShow
       },
     {
       path: '/login',
@@ -63,12 +62,7 @@ function logout (to, from, next) {
     store.state.authState = false;
     next()
 }
-//перед переходом на страницу записываем данные товара из массива state которые мы передали из компонента goodShow
-//в локальное хранилище
-function beforeSetLocalStorage (to, from, next) {
-    store.dispatch('setGoodToFavorites');
-    next()
-}
+
 //router guard
 router.beforeEach((to, from, next) => {
     if(to.path != '/login' && to.path != '/register') {
