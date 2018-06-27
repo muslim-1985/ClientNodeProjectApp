@@ -15,9 +15,7 @@
             Categories
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdow">
-            <a href="#" class="dropdown-item">Cat1</a>
-            <a href="#" class="dropdown-item">Cat2</a>
-            <a href="#" class="dropdown-item">Cat3</a>
+            <router-link tag="a" class="dropdown-item" :to="{ name: 'catFilter', params: { id: data.category._id }}" v-for="data in goodData">{{ data.category.category }}</router-link>
           </div>
         </li>
         <li class="nav-item">
@@ -48,9 +46,20 @@
     import store from '../store/index'
   export default {
     name: 'headNav',
+      created () {
+          this.setGoodData();
+      },
     computed: {
         check () {
             return store.state.authState;
+        },
+        goodData () {
+            return store.getters.goodData;
+        }
+    },
+    methods: {
+        setGoodData () {
+            store.dispatch('setGood');
         }
     }
   }

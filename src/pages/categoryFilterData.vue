@@ -4,7 +4,7 @@
             <div class="col-12">
                 <router-link tag="button" class="btn btn-success btn-sm" style="float: right;" to="/goodsave">+ Create Good </router-link>
                 <router-link tag="button" class="btn btn-success btn-sm" to="/savedata">+ Create Category</router-link>
-                <h3>Goods</h3>
+                <h3>Category Goods</h3>
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
@@ -25,11 +25,6 @@
                         <td><img :src="'http://localhost:3012/'+data.image.path"/></td>
                         <td>
                             <button class="btn btn-danger btn-sm" @click="deleteGoodData({id: data._id, path: data.image.path}, index)">delete</button>
-                            <button class="btn btn-sm" @click="setGoodInArray({name: data.name,
-                                                                                   price: data.price,
-                                                                                   category: data.category.category,
-                                                                                   image: 'http://localhost:3012/'+data.image.path
-                                                                                   })">add favorites</button>
                         </td>
                     </tr>
                     </tbody>
@@ -44,7 +39,7 @@
     export default {
         data() {
             return {
-               // goodsArray: []
+                // goodsArray: []
             }
         },
         created() {
@@ -52,36 +47,28 @@
         },
         computed: {
             getGoodData () {
-                return store.getters.goodData;
+                //console.log(this.$route.params.id)
+                return store.getters.goodData.filter((data) => {
+                    if(data.category._id === this.$route.params.id) {
+                        return data;
+                    } else return false;
+                })
             }
         },
         methods: {
             //получаем данные из БД и записываем в state
-             setGoodData () {
+            setGoodData () {
                 store.dispatch('setGood');
             },
             deleteGoodData ({id, path}, index) {
-                 store.dispatch('deleteGood', {id, path}).then(() => {
-                     this.getGoodData.splice(index, 1);
-                 })
-            },
-            //записываем данные в массив state для дальнейшего сохранения в локальном хранилище
-            setGoodInArray ({name, price, category, image}) {
-                 alert('Товар добавлен в "избранное"');
-                 //записываем данные в массив state
-                 store.commit('setGoodDataFromLocalStorage', {name, price, category, image});
+                store.dispatch('deleteGood', {id, path}).then(() => {
+                    this.getGoodData.splice(index, 1);
+                })
             }
         }
     }
 </script>
 
-<style lang="scss">
-    img {
-        width: 100px;
-        height: auto;
-    }
-    button {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+<style scoped>
+
 </style>

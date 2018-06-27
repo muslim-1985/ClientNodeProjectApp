@@ -11,7 +11,7 @@
                         <th scope="col">Price</th>
                         <th scope="col">Category</th>
                         <th scope="col">Image</th>
-                        <th scope="col">Buttons</th>
+                        <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>

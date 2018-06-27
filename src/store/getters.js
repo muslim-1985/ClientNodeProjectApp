@@ -11,7 +11,6 @@ export default {
         return state.good;
     },
         getGoodToFavorites (state) {
-            console.log(state.localStorage)
         return state.localStorage;
     }
 }

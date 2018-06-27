@@ -7,6 +7,7 @@ import Home from './pages/home'
 import GoodSave from './pages/goodSave'
 import GoodShow from './pages/goodShow'
 import FavoritesShow from './pages/favoritesShow'
+import CategoryFilterData from './pages/categoryFilterData'
 import store  from './store/index'
 import {sync}  from 'vuex-router-sync'
 import VueRouter from 'vue-router'
@@ -45,6 +46,11 @@ export const router = new VueRouter ({
           path: '/favorites',
           name: 'favorites',
           component: FavoritesShow
+      },
+      {
+          path: '/category/:id',
+          name: 'catFilter',
+          component: CategoryFilterData
       },
     {
       path: '/login',
