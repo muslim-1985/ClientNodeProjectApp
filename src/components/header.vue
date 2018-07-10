@@ -15,7 +15,7 @@
             Categories
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdow">
-            <router-link tag="a" class="dropdown-item" :to="{ name: 'catFilter', params: { id: data.category._id }}" v-for="data in goodData">{{ data.category.category }}</router-link>
+            <router-link tag="a" class="dropdown-item" :to="{ name: 'catFilter', params: { id: data.category._id }}" v-for="(data, index) in goodData" :key = "index">{{ data.category.category }}</router-link>
           </div>
         </li>
         <li class="nav-item">
@@ -23,6 +23,9 @@
         </li>
         <li class="nav-item">
           <router-link tag="a" class="nav-link" to="/favorites">Favorites<span class="sr-only">(current)</span></router-link>
+        </li>
+        <li class="nav-item">
+          <router-link tag="a" class="nav-link" to="/chat">Telegram Chat<span class="sr-only">(current)</span></router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,6 +57,7 @@
             return store.state.authState;
         },
         goodData () {
+            //let unique = ([...new Set(store.getters.goodData.map(item => item.category._id))]);
             return store.getters.goodData;
         }
     },

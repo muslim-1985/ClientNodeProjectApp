@@ -47,7 +47,7 @@
         },
         computed: {
             getGoodData () {
-                //console.log(this.$route.params.id)
+                //отфильтровываем результаты
                 return store.getters.goodData.filter((data) => {
                     if(data.category._id === this.$route.params.id) {
                         return data;
@@ -69,6 +69,9 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    img {
+        width: 100px;
+        height: auto;
+    }
 </style>

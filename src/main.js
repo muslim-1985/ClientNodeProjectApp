@@ -3,16 +3,18 @@ import App from './App.vue'
 import Login from './pages/login'
 import Register from './pages/register'
 import SaveData from './pages/saveData'
+//import VueSocketIO from 'vue-socket.io'
 import Home from './pages/home'
 import GoodSave from './pages/goodSave'
 import GoodShow from './pages/goodShow'
 import FavoritesShow from './pages/favoritesShow'
 import CategoryFilterData from './pages/categoryFilterData'
+import TelegramChat from './pages/telegramChat'
 import store  from './store/index'
 import {sync}  from 'vuex-router-sync'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
-
+//Vue.use(VueSocketIO, SocketInstance, store);
 
 export const router = new VueRouter ({
   routes: [
@@ -52,6 +54,11 @@ export const router = new VueRouter ({
           name: 'catFilter',
           component: CategoryFilterData
       },
+      {
+          path: '/chat',
+          name: 'chat',
+          component: TelegramChat
+      },
     {
       path: '/login',
       component: Login
@@ -88,6 +95,7 @@ sync(store, router);
 new Vue({
   el: '#app',
   render: h => h(App),
+  components: {TelegramChat},
   router,
   store
 });

@@ -17,7 +17,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(data, index) in getGoodData">
+                    <tr v-for="(data, index) in getGoodData" :key="index">
                         <td>{{ index }}</td>
                         <td>{{ data.name }}</td>
                         <td>{{ data.price }}</td>
@@ -67,7 +67,7 @@
             },
             //записываем данные в массив state для дальнейшего сохранения в локальном хранилище
             setGoodInArray ({name, price, category, image}) {
-                 alert('Товар добавлен в "избранное"');
+                 //alert('Товар добавлен в "избранное"');
                  //записываем данные в массив state
                  store.commit('setGoodDataFromLocalStorage', {name, price, category, image});
             }
