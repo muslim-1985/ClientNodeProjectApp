@@ -5,7 +5,7 @@
                 <h3 v-if="isConnected">We're connected to the socket server!</h3>
             </div>
             <LeftSidebar></LeftSidebar>
-            <!--<UserMessagesForm></UserMessagesForm>-->
+            <UserMessagesForm></UserMessagesForm>
         </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
     import SocketIo from 'socket.io-client'
     import LeftSidebar from '../components/leftSidebar'
-    // import UserMessagesForm from "../components/userMessagesForm";
+    import UserMessagesForm from "../components/userMessagesForm";
     export default {
         data() {
             return {
@@ -27,7 +27,7 @@
             this.io.on('connect', () => this.isConnected = true);
         },
         components: {
-            // UserMessagesForm,
+            UserMessagesForm,
             LeftSidebar
         }
     }

@@ -10,6 +10,7 @@ import GoodShow from './pages/goodShow'
 import FavoritesShow from './pages/favoritesShow'
 import CategoryFilterData from './pages/categoryFilterData'
 import TelegramChat from './pages/telegramChat'
+import UserMessages from './pages/userMessages'
 import store  from './store/index'
 import {sync}  from 'vuex-router-sync'
 import VueRouter from 'vue-router'
@@ -58,6 +59,11 @@ export const router = new VueRouter ({
           path: '/chat',
           name: 'chat',
           component: TelegramChat
+      },
+      {
+          path: '/chat/:chatId',
+          name: 'userMessages',
+          component: UserMessages
       },
     {
       path: '/login',

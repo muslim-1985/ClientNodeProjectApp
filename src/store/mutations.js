@@ -45,5 +45,11 @@ export default {
     },
     setGoodDataLocalSt (state) {
         state.localStorage = JSON.parse(Vue.localStorage.get('goodData'));
+    },
+    setBotUsers (state, data) {
+        state.botUsers.push(data);
+    },
+    clearBotUsers (state) {
+        state.botUsers = [];
     }
 }

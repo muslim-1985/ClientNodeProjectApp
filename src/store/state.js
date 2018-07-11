@@ -4,5 +4,6 @@ export default {
     category: [],
     good: [],
     goodDataLocalStorage: [],
-    localStorage: ''
+    localStorage: '',
+    botUsers: []
 }

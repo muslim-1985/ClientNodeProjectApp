@@ -13,7 +13,7 @@ export default {
         getGoodToFavorites (state) {
         return state.localStorage;
     },
-    getConnctedState (state) {
-            return state.isConnected;
+    getBotUsers (state) {
+            return state.botUsers;
     }
 }

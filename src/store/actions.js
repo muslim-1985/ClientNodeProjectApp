@@ -147,5 +147,16 @@ export default {
                  state.goodDataLocalStorage = [];
             }
         }
+    },
+
+    getBotUsers ({commit}) {
+        axios.post('http://localhost:3012/botUsers')
+            .then((res) => {
+                commit('clearBotUsers');
+                for (let key in res.data) {
+                    commit('setBotUsers', res.data[key]);
+                }
+            })
+            .catch((err) => console.log(err));
     }
 }
