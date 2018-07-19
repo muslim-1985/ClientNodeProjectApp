@@ -33,6 +33,7 @@
 
         methods: {
             sendMessage() {
+                this.io.emit('SUBSCRIBE', this.$route.params.chatId);
                 this.io.emit('SEND_MESSAGE', {
                     //записываем id чата текущего пользователя
                     chatId: this.$route.params.chatId,
