@@ -46,10 +46,17 @@ export default {
     setGoodDataLocalSt (state) {
         state.localStorage = JSON.parse(Vue.localStorage.get('goodData'));
     },
+    //telegramm chat
     setBotUsers (state, data) {
         state.botUsers.push(data);
     },
     clearBotUsers (state) {
         state.botUsers = [];
-    }
+    },
+    isConnected(state) {
+        state.io.on('connect', () => state.isConnected = true);
+    },
+    setMessageData (state, data) {
+        state.messages.push(data);
+    },
 }

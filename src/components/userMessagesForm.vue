@@ -13,33 +13,45 @@
 </template>
 
 <script>
-    import SocketIo from 'socket.io-client'
+    import store from '../store/index';
     export default {
         name: "userMessagesForm",
         data() {
             return {
-                data: '',
-                user: '',
+                // data: '',
+                // user: '',
                 message: '',
-                messages: [],
-                io: SocketIo('http://localhost:3012')
+               // messages: [],
+                //io: SocketIo('http://localhost:3012')
             }
         },
         mounted() {
-            this.io.on('MESSAGE', (data) => {
-                this.messages.push(data);
-            });
+            store.dispatch('eventOnMessages', this.$route.params.chatId);
+            //создаем событие для комнат приватного чата и передаем текущий айдишник пользователя
+            // this.io.emit('SUBSCRIBE', this.$route.params.chatId);
+            // this.io.on('MESSAGE', (data) => {
+            //     this.messages.push(data);
+            // });
         },
-
+        computed: {
+            messages () {
+                return store.getters.getMessages;
+            }
+        },
         methods: {
             sendMessage() {
-                this.io.emit('SUBSCRIBE', this.$route.params.chatId);
-                this.io.emit('SEND_MESSAGE', {
+                // this.io.emit('SEND_MESSAGE', {
+                //     //записываем id чата текущего пользователя
+                //     chatId: this.$route.params.chatId,
+                //     message: this.message
+                // });
+                // this.message = ''
+                store.dispatch('sendMessage', {
                     //записываем id чата текущего пользователя
-                    chatId: this.$route.params.chatId,
-                    message: this.message
+                        chatId: this.$route.params.chatId,
+                        message: this.message
                 });
-                this.message = ''
+                this.message = '';
             }
         },
     }

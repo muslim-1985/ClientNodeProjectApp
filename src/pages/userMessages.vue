@@ -11,20 +11,22 @@
 </template>
 
 <script>
-    import SocketIo from 'socket.io-client'
     import LeftSidebar from '../components/leftSidebar'
     import UserMessagesForm from "../components/userMessagesForm";
+    import store from '../store/index';
     export default {
         data() {
             return {
-                data: '',
-                user: '',
-                isConnected: false,
-                io: SocketIo('http://localhost:3012')
+
             }
         },
         mounted() {
-            this.io.on('connect', () => this.isConnected = true);
+            store.commit('isConnected');
+        },
+        computed: {
+          isConnected () {
+              return store.getters.isConnected;
+          }
         },
         components: {
             UserMessagesForm,

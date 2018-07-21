@@ -13,7 +13,7 @@
 <script>
     import SocketIo from 'socket.io-client'
     import LeftSidebar from '../components/leftSidebar'
-    // import UserMessagesForm from "../components/userMessagesForm";
+    //import UserMessagesForm from "../components/userMessagesForm";
     export default {
         data() {
             return {
@@ -24,7 +24,7 @@
             }
         },
         mounted() {
-            this.io.on('connect', () => this.isConnected = true);
+            this.io.once('connect', () => this.isConnected = true);
         },
         components: {
             // UserMessagesForm,

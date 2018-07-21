@@ -158,5 +158,21 @@ export default {
                 }
             })
             .catch((err) => console.log(err));
+    },
+
+    eventOnMessages ({commit, state}, chatId) {
+        //console.log(chatId);
+        state.io.emit('SUBSCRIBE', chatId);
+        state.io.on('MESSAGE', (data) => {
+            console.log(data);
+            commit('setMessageData', data);
+        });
+    },
+    sendMessage ({commit, state}, data) {
+        state.io.emit('SEND_MESSAGE', {
+            //записываем id чата текущего пользователя
+            chatId: data.chatId,
+            message: data.message
+        });
     }
 }

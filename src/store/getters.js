@@ -1,4 +1,3 @@
-import Vue from "vue";
 
 export default {
         userData(state) {
@@ -15,5 +14,11 @@ export default {
     },
     getBotUsers (state) {
             return state.botUsers;
+    },
+    isConnected (state) {
+            return state.isConnected;
+    },
+    getMessages (state) {
+            return state.messages;
     }
 }
