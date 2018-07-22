@@ -1,6 +1,5 @@
 import Vue from "vue";
 import axios from "axios";
-
 export default {
     checkLoginAuthState(state, bool) {
         state.authState = bool;
@@ -59,4 +58,16 @@ export default {
     setMessageData (state, data) {
         state.messages.push(data);
     },
+    countMessages (state) {
+        state.messageCounter++;
+        Vue.localStorage.set('messageCounter', state.messageCounter, 7);
+        state.messageCounter = Vue.localStorage.get('messageCounter');
+    },
+    getCounterFromLocalStorage (state) {
+        state.messageCounterFromStorage = Vue.localStorage.get('messageCounter');
+    },
+    removeMessageCounter (state) {
+        state.messageCounter = '';
+        Vue.localStorage.remove('messageCounter');
+    }
 }

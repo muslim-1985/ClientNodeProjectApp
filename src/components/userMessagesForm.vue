@@ -18,20 +18,11 @@
         name: "userMessagesForm",
         data() {
             return {
-                // data: '',
-                // user: '',
                 message: '',
-               // messages: [],
-                //io: SocketIo('http://localhost:3012')
             }
         },
         mounted() {
             store.dispatch('eventOnMessages', this.$route.params.chatId);
-            //создаем событие для комнат приватного чата и передаем текущий айдишник пользователя
-            // this.io.emit('SUBSCRIBE', this.$route.params.chatId);
-            // this.io.on('MESSAGE', (data) => {
-            //     this.messages.push(data);
-            // });
         },
         computed: {
             messages () {
@@ -40,12 +31,6 @@
         },
         methods: {
             sendMessage() {
-                // this.io.emit('SEND_MESSAGE', {
-                //     //записываем id чата текущего пользователя
-                //     chatId: this.$route.params.chatId,
-                //     message: this.message
-                // });
-                // this.message = ''
                 store.dispatch('sendMessage', {
                     //записываем id чата текущего пользователя
                         chatId: this.$route.params.chatId,

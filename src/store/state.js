@@ -10,8 +10,7 @@ export default {
     botUsers: [],
     isConnected: false,
     messageCounter: 0,
-    data: '',
-    user: '',
+    messageCounterFromStorage: 0,
     messages: [],
     io: SocketIo('http://localhost:3012')
 }

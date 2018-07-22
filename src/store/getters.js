@@ -20,5 +20,8 @@ export default {
     },
     getMessages (state) {
             return state.messages;
+    },
+    getCountFromLocalStorage (state) {
+        return state.messageCounterFromStorage;
     }
 }

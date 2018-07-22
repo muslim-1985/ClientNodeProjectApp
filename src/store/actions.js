@@ -164,15 +164,15 @@ export default {
         //console.log(chatId);
         state.io.emit('SUBSCRIBE', chatId);
         state.io.on('MESSAGE', (data) => {
-            console.log(data);
             commit('setMessageData', data);
         });
+        state.io.on('MESSAGE_BOT_USER', (data) => {
+            commit('countMessages');
+            commit('getCounterFromLocalStorage');
+            commit('setMessageData', data);
+        })
     },
-    sendMessage ({commit, state}, data) {
-        state.io.emit('SEND_MESSAGE', {
-            //записываем id чата текущего пользователя
-            chatId: data.chatId,
-            message: data.message
-        });
+    sendMessage ({commit, state}, {chatId, message}) {
+        state.io.emit('SEND_MESSAGE', {chatId, message});
     }
 }

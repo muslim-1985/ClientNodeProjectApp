@@ -37,6 +37,7 @@
             <router-link tag="a" class="dropdown-item" to="/logout" v-if="check">Logout</router-link>
           </div>
         </li>
+          <li>{{ counterMessages }}</li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -51,6 +52,7 @@
     name: 'headNav',
       created () {
           this.setGoodData();
+          store.commit('getCounterFromLocalStorage');
       },
     computed: {
         check () {
@@ -59,6 +61,9 @@
         goodData () {
             //let unique = ([...new Set(store.getters.goodData.map(item => item.category._id))]);
             return store.getters.goodData;
+        },
+        counterMessages () {
+            return store.getters.getCountFromLocalStorage;
         }
     },
     methods: {
