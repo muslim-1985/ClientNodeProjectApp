@@ -160,6 +160,18 @@ export default {
             .catch((err) => console.log(err));
     },
 
+    setUserMessages ({commit, state}, chatId) {
+        axios.get(`http://localhost:3012/userMessages/${chatId}`)
+            .then((res) => {
+                console.log(res);
+                commit('clearUserMessages');
+                for (let key in res.data) {
+                    commit('setUserMessage', res.data[key]);
+                }
+            })
+            .catch((err) => console.log(err));
+    },
+
     eventOnMessages ({commit, state}, chatId) {
         //console.log(chatId);
         state.io.emit('SUBSCRIBE', chatId);

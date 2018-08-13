@@ -12,5 +12,6 @@ export default {
     messageCounter: 0,
     messageCounterFromStorage: 0,
     messages: [],
+    userMessages: [],
     io: SocketIo('http://localhost:3012')
 }

@@ -3,6 +3,10 @@
         <div class="messages" v-for="(msg, index) in messages" :key="index">
             <p><span class="font-weight-bold">{{ msg.username }}: </span>{{ msg.message }}</p>
         </div>
+
+        <div class="messages" v-for="(msg, index) in userMessages[0]" :key="index">
+            <p><span class="font-weight-bold">{{ msg.username }}: </span>{{ msg.subject }}</p>
+        </div>
         <form>
             <div class="form-group">
                 <textarea class="form-control" rows="5" id="message" placeholder="Enter message" v-model="message"></textarea>
@@ -23,10 +27,15 @@
         },
         mounted() {
             store.dispatch('eventOnMessages', this.$route.params.chatId);
+            store.dispatch('setUserMessages', this.$route.params.chatId);
         },
         computed: {
             messages () {
                 return store.getters.getMessages;
+            },
+            //получаем сохраненные сообщения из бд
+            userMessages () {
+                return store.state.userMessages;
             }
         },
         methods: {

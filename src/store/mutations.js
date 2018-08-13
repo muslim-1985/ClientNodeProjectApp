@@ -58,6 +58,12 @@ export default {
     setMessageData (state, data) {
         state.messages.push(data);
     },
+    setUserMessage (state, data) {
+        state.userMessages.push(data);
+    },
+    clearUserMessages (state) {
+        state.userMessages = [];
+    },
     countMessages (state) {
         state.messageCounter++;
         Vue.localStorage.set('messageCounter', state.messageCounter, 7);
