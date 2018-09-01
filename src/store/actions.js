@@ -186,5 +186,14 @@ export default {
     },
     sendMessage ({commit, state}, {chatId, message}) {
         state.io.emit('SEND_MESSAGE', {chatId, message});
+    },
+    async deleteMessageFromDB ({commit, state}, {userId, msgId}) {
+        try {
+            let ids = {userId, msgId};
+            let res = await axios.post(`http://localhost:3012/deleteMessage`, ids);
+            console.log(res);
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
