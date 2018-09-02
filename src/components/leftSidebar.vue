@@ -1,8 +1,12 @@
 <template>
         <div class="col-3">
             <ul class="left_sidebar">
+
                 <li v-for="(user, index) in getBotUsers" :key="index">
-                    <router-link tag="a" :to="{ name: 'userMessages', params: { chatId: user.chatId }}">{{ user.username }}</router-link>
+                    <router-link tag="a" :to="{ name: 'userMessages', params: { chatId: user.chatId }}">
+                        {{ user.firstName }}
+                        <img v-bind:src="user.avatar" alt="" style="width: 19%; border-radius: 50%; display: inline-block">
+                    </router-link>
                     <!--<span class="online"></span>-->
                 </li>
             </ul>

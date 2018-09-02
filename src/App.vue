@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import  headNav from './components/header'
+  import headNav from './components/header'
   import footNav from './components/footer'
 export default {
   name: 'app',

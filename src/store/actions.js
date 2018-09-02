@@ -191,7 +191,7 @@ export default {
         try {
             let ids = {userId, msgId};
             let res = await axios.post(`http://localhost:3012/deleteMessage`, ids);
-            console.log(res);
+            alert(res.data);
         } catch (e) {
             console.log(e);
         }
