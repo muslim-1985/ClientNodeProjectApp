@@ -6,7 +6,7 @@
                 <span class="font-weight-bold">{{ msg.username }}: </span>
                 <span class="delete" style="color: red; cursor: pointer" @click="deleteMessage({userId: userMessages[1], msgId: msg._id}, index )">delete</span>
                 {{ msg.subject }}
-                <img v-bind:src="userMessages[6]" alt="userImg" style="width: 6%; border-radius: 50%">
+                <img v-bind:src="`http://localhost:3012/${userMessages[6]}`" alt="userImg" style="width: 6%; border-radius: 50%">
             </p>
         </div>
         <div class="messages" v-for="(msg, index) in messages" :key="index">
@@ -33,7 +33,6 @@
             }
         },
         created() {
-            console.log(this.$route.params.chatId)
             store.dispatch('eventOnMessages', this.$route.params.chatId);
             store.dispatch('setUserMessages', this.$route.params.chatId);
         },
