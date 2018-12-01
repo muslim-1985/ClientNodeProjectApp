@@ -77,6 +77,12 @@ export default {
         });
 },
     saveGood ({commit}, {category, name, price, image}) {
+        const headers = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Vue.localStorage.get('token')}`
+            }
+        };
     const objFormData = {category, name, price, image};
     //создаем нативный js обЪект для отправки данных multipart form data
     let obj = new FormData();
@@ -85,9 +91,10 @@ export default {
     obj.append('price', objFormData.price);
     obj.append('image', objFormData.image);
     //отправляем данные на сервер
-    axios.post('http://localhost:3012/setGood', obj)
+    axios.post('http://localhost:3012/setGood', obj, headers)
         .then((res) => {
             alert('Good created successful');
+            commit('checkToken');
             console.log(res)
         })
         .catch((err) => {
@@ -117,11 +124,17 @@ export default {
     deleteGood ({commit}, {id, path}) {
     const objFormData = JSON.stringify({id, path});
     //console.log(objFormData);
-    const headers = {headers: {'Content-Type': 'application/json'}};
+        const headers = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Vue.localStorage.get('token')}`
+            }
+        };
     axios.post('http://localhost:3012/deleteGood', objFormData, headers)
         .then((res) => {
             alert('Good deleted successful');
-            console.log(res)
+            commit('checkToken');
+            //console.log(res)
         })
         .catch((err) => {
             console.log(err)
@@ -150,8 +163,16 @@ export default {
     },
 
     getBotUsers ({commit}) {
-        axios.post('http://localhost:3012/botUsers')
+        const headers = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Vue.localStorage.get('token')}`
+            }
+        };
+
+        axios.get('http://localhost:3012/botUsers', headers)
             .then((res) => {
+                commit('checkToken');
                 commit('clearBotUsers');
                 for (let key in res.data) {
                     commit('setBotUsers', res.data[key]);
@@ -161,7 +182,13 @@ export default {
     },
 
     setUserMessages ({commit, state}, chatId) {
-        axios.get(`http://localhost:3012/userMessages/${chatId}`)
+        const headers = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Vue.localStorage.get('token')}`
+            }
+        };
+        axios.get(`http://localhost:3012/userMessages/${chatId}`, headers)
             .then((res) => {
                 console.log(res);
                 commit('clearUserMessages');
@@ -171,7 +198,6 @@ export default {
             })
             .catch((err) => console.log(err));
     },
-
     eventOnMessages ({commit, state}, chatId) {
         //console.log(chatId);
         state.io.emit('SUBSCRIBE', chatId);
@@ -184,13 +210,19 @@ export default {
             commit('setMessageData', data);
         })
     },
-    sendMessage ({commit, state}, {chatId, message}) {
-        state.io.emit('SEND_MESSAGE', {chatId, message});
+    sendMessage ({commit, state}, {chatId, message, userId}) {
+        state.io.emit('SEND_MESSAGE', {chatId, message, userId});
     },
     async deleteMessageFromDB ({commit, state}, {userId, msgId}) {
         try {
             let ids = {userId, msgId};
-            let res = await axios.post(`http://localhost:3012/deleteMessage`, ids);
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Vue.localStorage.get('token')}`
+                }
+            };
+            let res = await axios.post(`http://localhost:3012/deleteMessage`, ids, headers);
             alert(res.data);
         } catch (e) {
             console.log(e);

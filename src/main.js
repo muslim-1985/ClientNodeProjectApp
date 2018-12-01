@@ -61,7 +61,7 @@ export const router = new VueRouter ({
           component: TelegramChat
       },
       {
-          path: '/chat/:chatId',
+          path: '/chat/:username',
           name: 'userMessages',
           component: UserMessages
       },

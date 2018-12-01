@@ -25,6 +25,7 @@
 
 <script>
     import store from '../store/index';
+    import Vue from 'vue'
     export default {
         name: "userMessagesForm",
         data() {
@@ -32,9 +33,9 @@
                 message: '',
             }
         },
-        created() {
-            store.dispatch('eventOnMessages', this.$route.params.chatId);
-            store.dispatch('setUserMessages', this.$route.params.chatId);
+        mounted() {
+            store.dispatch('eventOnMessages', Vue.localStorage.get('chatId'));
+            store.dispatch('setUserMessages', Vue.localStorage.get('chatId'));
         },
         computed: {
             messages () {
@@ -47,9 +48,10 @@
         },
         methods: {
             sendMessage() {
+                // console.log(this.messages)
                 store.dispatch('sendMessage', {
                     //записываем id чата текущего пользователя
-                        chatId: this.$route.params.chatId,
+                        chatId: Vue.localStorage.get('chatId'),
                         message: this.message
                 });
                 this.message = '';

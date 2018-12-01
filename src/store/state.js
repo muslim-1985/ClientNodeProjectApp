@@ -1,4 +1,6 @@
+
 import SocketIo from 'socket.io-client';
+
 export default {
     authState: false,
     resData: [],
